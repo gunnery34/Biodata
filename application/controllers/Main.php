@@ -38,7 +38,18 @@ class Main extends CI_Controller {
 			$this->load->library('password'); // load pass hash
 
 			if (!$this->password->validate_password($pass, $get_rslt_usr->UsrPassword)) { // password false
-				// pass error
+				// pass false
+
+				// set login actity
+				Accesscontrol_Helper::LoginActivity_Log(
+					Accesscontrol_Helper::UniqIdReal(),
+					'Sign In',
+					ucwords($clean['UsrEmail']),
+					'',
+					'Sign In',
+					json_encode($clean),
+					'Sign In - Failed (Error Password)'
+				);
 
 				$this->session->set_flashdata('error', 'account error');
 				redirect(base_url('main/sign_in'));
@@ -49,11 +60,34 @@ class Main extends CI_Controller {
 				}
 				$this->session->set_userdata('is_logged_in', TRUE);
 
+				// set login actity
+				Accesscontrol_Helper::LoginActivity_Log(
+					Accesscontrol_Helper::UniqIdReal(),
+					'Sign In',
+					ucwords($clean['UsrEmail']),
+					$get_rslt_usr->UsrId,
+					'Sign In',
+					json_encode($get_rslt_usr),
+					'Sign In - Success'
+				);
+
 				$this->session->set_flashdata('success', 'success login');
 				redirect(base_url('dashboard/index'));
 			}
 		} else {
 			// jika email tidak ditemukan
+
+			// set login actity
+			Accesscontrol_Helper::LoginActivity_Log(
+				Accesscontrol_Helper::UniqIdReal(),
+				'Sign In',
+				ucwords($clean['UsrEmail']),
+				'',
+				'Sign In',
+				json_encode($clean),
+				'Sign In - Failed (Email not found)'
+			);
+
 			$this->session->set_flashdata('error', 'your account not found');
 			redirect(base_url('main/sign_in'));
 		}
@@ -98,12 +132,32 @@ class Main extends CI_Controller {
 				// create new data
 				$get_rslt_usr = $this->M_Main->add($data_usr);
 
-				if ($get_rslt_usr > 0) {
-					// data berhasil
+				if ($get_rslt_usr > 0) { // data berhasil
+					// set login actity
+					Accesscontrol_Helper::LoginActivity_Log(
+						Accesscontrol_Helper::UniqIdReal(),
+						'Sign Up',
+						ucwords($clean['UsrEmail']),
+						'',
+						'Sign Up',
+						json_encode($data_usr),
+						'Sign Up - Success'
+					);
+
 					$this->session->set_flashdata('success', 'Insert data success');
 					redirect(base_url('main/sign_up'));
-				} else {
-					// data gagal
+				} else { // data gagal
+					// set login actity
+					Accesscontrol_Helper::LoginActivity_Log(
+						Accesscontrol_Helper::UniqIdReal(),
+						'Sign Up',
+						ucwords($clean['UsrEmail']),
+						'',
+						'Sign Up',
+						json_encode($data_usr),
+						'Sign Up - Failed (Duplicate Data)'
+					);
+
 					$this->session->set_flashdata('error', 'Insert data failed');
 					redirect(base_url('main/sign_up'));
 				}
@@ -118,11 +172,42 @@ class Main extends CI_Controller {
 	}
 
 	public function sign_out() {
-		foreach ($this->session->userdata as $key => $value) {
-			$this->session->unset_userdata($key);
-		}
+		$get_rslt_usr = $this->M_Main->get_by_uniqueid($this->session->userdata('UsrUniqeId'));
 
-		$this->session->set_flashdata('success', 'Success sign out');
-		redirect(base_url('main/sign_in'));
+		// echo $this->session->userdata('UsrUniqeId');
+
+		if ($get_rslt_usr > 0) {
+			foreach ($this->session->userdata as $key => $value) { // delete session
+				$this->session->unset_userdata($key);
+			}
+
+			// set login actity
+			Accesscontrol_Helper::LoginActivity_Log(
+				Accesscontrol_Helper::UniqIdReal(),
+				'Sign Out',
+				ucwords($get_rslt_usr->UsrEmail),
+				$get_rslt_usr->UsrId,
+				'Sign Out',
+				json_encode($get_rslt_usr),
+				'Sign Out - Success'
+			);
+
+			$this->session->set_flashdata('success', 'Success sign out');
+			redirect(base_url('main/sign_in'));
+		} else {
+			// set login actity
+			Accesscontrol_Helper::LoginActivity_Log(
+				Accesscontrol_Helper::UniqIdReal(),
+				'Sign Out',
+				'Unknown',
+				'',
+				'Sign Out',
+				'Unknown',
+				'Sign Out - Bugs - Important'
+			);
+
+			$this->session->set_flashdata('error', 'error');
+			redirect(base_url('main/sign_in'));
+		}
 	}
 }

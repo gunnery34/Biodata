@@ -32,6 +32,7 @@ class Accesscontrol_Helper {
 		return substr(bin2hex($bytes), 0, $length);
 	}
 
+	// set Loggin
 	public static function Is_Loggin_In() {
 		$CI =& get_instance();
 
@@ -40,5 +41,34 @@ class Accesscontrol_Helper {
 		} else {
 			return false;
 		}
+	}
+
+	// set activity login
+	// IdUnique, CodeName, UsrName, UsrId, Name, Data
+	public static function LoginActivity_Log($ActivityLogIdUnique, $ActivityLogCodeName, $ActivityLogUsrName, $ActivityLogUsrId, $ActivityLogName, $ActivityLogData, $ActivityLogStatus){
+		$CI =& get_instance();
+
+		if ($ActivityLogCodeName == 'Sign In') {
+			$ActivityLogCode = 1;
+		} else if ($ActivityLogCodeName == 'Sign Up') {
+			$ActivityLogCode = 2;
+		} else if ($ActivityLogCodeName == 'Sign Out') {
+			$ActivityLogCode = 3;
+		} else {
+			$ActivityLogCode = 0;
+		}
+
+		$param['LAL_IdUnique'] 			= $ActivityLogIdUnique;
+		$param['LAL_Code'] 				= $ActivityLogCode;
+		$param['LAL_CodeName'] 			= $ActivityLogCodeName;
+		$param['LAL_UsrName'] 			= $ActivityLogUsrName;
+		$param['LAL_Name'] 				= $ActivityLogName;
+		$param['LAL_Data'] 				= $ActivityLogData;
+		$param['LAL_Status'] 			= $ActivityLogStatus;
+		$param['LAL_UsrId'] 			= $ActivityLogUsrId;
+		$param['LAL_Created_TypeID'] 	= date('d-F-Y H:i:s');
+
+		// save to db
+		$CI->M_Activity->Save_LoginActivityLog($param);
 	}
 }

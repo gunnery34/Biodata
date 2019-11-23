@@ -30,4 +30,13 @@ class M_Main extends CI_Model {
 			]
 		)->row();
 	}
+
+	public function get_by_uniqueid($string) {
+		return $this->db->get_where(
+			'tbl_usr', // table
+			[
+				'UsrUniqeId' => $string  // column
+			]
+		)->row();
+	}
 }
