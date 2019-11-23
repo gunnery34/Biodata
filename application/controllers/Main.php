@@ -39,6 +39,7 @@ class Main extends CI_Controller {
 
 			if (!$this->password->validate_password($pass, $get_rslt_usr->UsrPassword)) { // password false
 				// pass error
+
 				$this->session->set_flashdata('error', 'account error');
 				redirect(base_url('main/sign_in'));
 			} else {
@@ -53,6 +54,8 @@ class Main extends CI_Controller {
 			}
 		} else {
 			// jika email tidak ditemukan
+			$this->session->set_flashdata('error', 'your account not found');
+			redirect(base_url('main/sign_in'));
 		}
 	}
 
