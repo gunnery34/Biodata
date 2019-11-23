@@ -218,11 +218,17 @@
     <script src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>dist/js/demo.js"></script>
+
+    <?php echo $js_outline; ?> <!-- js outline -->
+
     <script>
         $(document).ready(function() {
-            $('.sidebar-menu').tree()
+            $('.sidebar-menu').tree();
+
+            <?php echo $js_inline; ?> // js inline
         })
     </script>
+
 </body>
 
 </html>

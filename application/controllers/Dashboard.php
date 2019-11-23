@@ -5,6 +5,15 @@ class Dashboard extends CI_Controller {
 	public $data = []; // set public data
 
 	function __construct() {
+		$this->data['menu_parent'] = '';
+		$this->data['menu_child'] = '';
+
+		$this->data['css_outline'] = '';
+		$this->data['css_inline'] = '';
+
+		$this->data['js_outline'] = '';
+		$this->data['js_inline'] = '';
+
 		parent::__construct();
 
 		if (Accesscontrol_Helper::Is_Loggin_In() == false) {
@@ -19,6 +28,9 @@ class Dashboard extends CI_Controller {
 		// set title
 		$this->data['title'] = 'Blank Page Index1';
 
+		$this->data['menu_parent'] = 'Dashboard';
+		$this->data['menu_child'] = 'Index';
+
 		// load view dashboard
 		$this->load->view('layout/header', $this->data);
 		$this->load->view('layout/sidebar', $this->data);
@@ -29,6 +41,9 @@ class Dashboard extends CI_Controller {
 	public function index2() {
 		// set title
 		$this->data['title'] = 'Blank Page Index2';
+
+		$this->data['menu_parent'] = 'Dashboard';
+		$this->data['menu_child'] = 'Index';
 
 		// load view dashboard
 		$this->load->view('layout/header', $this->data);
