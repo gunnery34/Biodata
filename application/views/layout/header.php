@@ -47,7 +47,7 @@
             border-radius: 0 !important;
         }
 
-        /* .select2-selection,
+        .select2-selection,
         ul.select2-results__options,
         li.select2-results__option,
         .select2-results,
@@ -60,7 +60,7 @@
 
         .select2-container--default .select2-selection--single .select2-selection__arrow { right: 6px; top: 3px; }
 
-        .select2-container .select2-selection--single { height: 34px; } */
+        .select2-container .select2-selection--single { height: 34px; }
 
         .select2-container--default .select2-selection--multiple .select2-selection__choice { background-color: #3c8dbc; color: #fff; }
         .select2-container--default .select2-selection--multiple .select2-selection__choice__remove { color: #fff; }

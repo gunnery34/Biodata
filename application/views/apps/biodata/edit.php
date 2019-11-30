@@ -9,7 +9,7 @@
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li><a href="#">Master Data</a></li>
 			<li><a href="#">Biodata</a></li>
-			<li class="active">Create</li>
+			<li class="active">Edit</li>
 		</ol>
 	</section>
 
@@ -47,18 +47,19 @@
 				<?php
 					$attr_form = [
 						'class' 							=> 'form-horizontal',
-						'id'								=> 'form-add-new-bio',
+						'id'								=> 'form-edit-bio',
 						'data-bv-message'					=> 'This value is not valid',
 						'data-bv-feedbackicons-valid'		=> 'glyphicon glyphicon-ok',
 						'data-bv-feedbackicons-invalid'		=> 'glyphicon glyphicon-remove',
 						'data-bv-feedbackicons-validating'	=> 'glyphicon glyphicon-refresh',
 					];
-					echo form_open('biodata/create_process', $attr_form);
+					$hidden = [ 'BioUniqueId' => $rslt_bio->BioUniqueId ];
+					echo form_open('biodata/update', $attr_form, $hidden);
 				?>
 				<!-- Default box -->
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<h3 class="box-title"><i class="fa fa-plus"></i> Create New Biodata</h3>
+						<h3 class="box-title"><i class="fa fa-pencil"></i> Edit Data Biodata</h3>
 
 						<div class="box-tools pull-right">
 							<a href="<?php echo base_url('biodata/index') ?>" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Back to Module Biodata">
@@ -85,7 +86,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioName',
 												'placeholder' 					=> 'Input Nama',
-												'value' 						=> set_value('BioName'),
+												'value' 						=> $rslt_bio->BioName,
 												// 'required' 						=> '',
 												'autofocus' 					=> '',
 												'data-bv-notempty' 				=> 'true',
@@ -111,7 +112,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioEmail',
 												'placeholder' 					=> 'Input E-mail',
-												'value' 						=> set_value('BioEmail'),
+												'value' 						=> $rslt_bio->BioEmail,
 												'data-bv-emailaddress' 			=> 'true',
 												'data-bv-emailaddress-message' 	=> 'The Email is not a valid email address',
 											];
@@ -133,7 +134,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioBirthPlace',
 												'placeholder' 					=> 'Input Tempat Lahir',
-												'value' 						=> set_value('BioBirthPlace'),
+												'value' 						=> $rslt_bio->BioBirthPlace,
 											];
 											echo form_input($data_input) . PHP_EOL;
 										?>
@@ -151,7 +152,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioBirthDate',
 												'placeholder' 					=> 'Input Nama',
-												'value' 						=> set_value('BioBirthDate'),
+												'value' 						=> $rslt_bio->BioBirthDate,
 												'data-provide' 					=> 'datepicker',
 												'data-date-today-highlight' 	=> 'true',
 												'data-date-orientation' 		=> 'bottom',
@@ -176,6 +177,7 @@
 												'id' 							=> 'BioAddress',
 												'placeholder' 					=> 'Input Alamat',
 												'rows' 							=> '5',
+												'value' 						=> $rslt_bio->BioAddress,
 											];
 											echo form_textarea($data_input) . PHP_EOL;
 										?>
@@ -194,6 +196,7 @@
 												'id' 							=> 'BioAddressCurrent',
 												'placeholder' 					=> 'Input Tempat Tinggal Sekarang',
 												'rows' 							=> '5',
+												'value' 						=> $rslt_bio->BioAddressCurrent,
 											];
 											echo form_textarea($data_input) . PHP_EOL;
 										?>
@@ -221,7 +224,7 @@
 												'id' 							=> 'BioReligion',
 												'data-placeholder' 				=> '- Pilih Agama -',
 											];
-											echo form_dropdown('BioReligion', $data_input, '', $options) . PHP_EOL;
+											echo form_dropdown('BioReligion', $data_input, $rslt_bio->BioReligion, $options) . PHP_EOL;
 										?>
 									</div>
 								</div>
@@ -237,7 +240,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioPhoneNum',
 												'placeholder' 					=> 'Input Nama',
-												'value' 						=> set_value('BioPhoneNum'),
+												'value' 						=> $rslt_bio->BioPhoneNum,
 											];
 											echo form_input($data_input) . PHP_EOL;
 										?>
@@ -251,6 +254,8 @@
 									<div class="col-md-12">
 										<label for="BioEducation" class="label-control">Pendidikan</label> <br />
 										<?php
+											$bio_education_expl = explode(',', $rslt_bio->BioEducation);
+
 											$data_input = [
 												'SD' 		=> 'SD',
 												'SMP'		=> 'SMP',
@@ -266,7 +271,7 @@
 												'multiple' 						=> 'multiple',
 												'data-placeholder' 				=> '- Pilih Pendidikan -',
 											];
-											echo form_dropdown('BioEducation[]', $data_input, '', $options) . PHP_EOL;
+											echo form_dropdown('BioEducation[]', $data_input, $bio_education_expl, $options) . PHP_EOL;
 										?>
 									</div>
 								</div>
@@ -282,7 +287,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioSkill',
 												'placeholder' 					=> 'Input Skill',
-												'value' 						=> set_value('BioSkill'),
+												'value' 						=> $rslt_bio->BioSkill,
 												'data-role' 					=> 'tagsinput',
 												'style' 						=> 'width: 100% !important;',
 											];
@@ -312,7 +317,7 @@
 												'id' 					=> 'BioGender',
 												'data-placeholder' 		=> '- Pilih Jenis Kelamin -',
 											];
-											echo form_dropdown('BioGender', $data_gender, '', $options) . PHP_EOL;
+											echo form_dropdown('BioGender', $data_gender, $rslt_bio->BioGender, $options) . PHP_EOL;
 										?>
 									</div>
 								</div>
@@ -327,7 +332,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioLanguage',
 												'placeholder' 					=> 'Input bahasa',
-												'value' 						=> set_value('BioLanguage'),
+												'value' 						=> $rslt_bio->BioLanguage,
 												'data-role' 					=> 'tagsinput',
 												'style' 						=> 'width: 100% !important; text-transform: capitalize;',
 											];
@@ -348,6 +353,7 @@
 												'id' 							=> 'BioExperince',
 												'placeholder' 					=> 'Input Pengalaman',
 												'rows' 							=> '5',
+												'value' 						=> $rslt_bio->BioExperince,
 											];
 											echo form_textarea($data_input) . PHP_EOL;
 										?>
@@ -373,7 +379,7 @@
 												'id' 							=> 'BioNationaly',
 												'data-placeholder' 				=> '- Pilih Kebangsaan -',
 											];
-											echo form_dropdown('BioNationaly', $data_input, '', $options) . PHP_EOL;
+											echo form_dropdown('BioNationaly', $data_input, $rslt_bio->BioNationaly, $options) . PHP_EOL;
 										?>
 									</div>
 								</div>
@@ -389,7 +395,7 @@
 												'class' 						=> 'form-control',
 												'id' 							=> 'BioHobby',
 												'placeholder' 					=> 'Input Hobi',
-												'value' 						=> set_value('BioHobby'),
+												'value' 						=> $rslt_bio->BioHobby,
 												'data-role' 					=> 'tagsinput',
 												'style' 						=> 'width: 100% !important;',
 											];
@@ -417,7 +423,7 @@
 												'id' 							=> 'BioStatusMarital',
 												'data-placeholder' 				=> '- Pilih Status -',
 											];
-											echo form_dropdown('BioStatusMarital', $data_input, '', $options) . PHP_EOL;
+											echo form_dropdown('BioStatusMarital', $data_input, $rslt_bio->BioStatusMarital, $options) . PHP_EOL;
 										?>
 									</div>
 								</div>
@@ -434,6 +440,7 @@
 												'id' 							=> 'BioQuote',
 												'placeholder' 					=> 'Input Kutipan',
 												'rows' 							=> '5',
+												'value' 						=> $rslt_bio->BioQuote,
 											];
 											echo form_textarea($data_input) . PHP_EOL;
 										?>
@@ -448,11 +455,11 @@
 							<div class="col-md-12">
 								<div class="pull-right">
 									<button type="submit" class="btn btn-primary btn-xs">
-										<i class="fa fa-send"></i> Submit
+										<i class="fa fa-upload"></i> Update
 									</button>
-									<button type="reset" class="btn btn-danger btn-xs">
+									<!-- <button type="reset" class="btn btn-danger btn-xs">
 										<i class="fa fa-refresh"></i> Reset Form
-									</button>
+									</button> -->
 								</div>
 							</div>
 						</div>
