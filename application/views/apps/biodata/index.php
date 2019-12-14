@@ -63,24 +63,26 @@
 				</div>
 			</div>
 			<div class="box-body">
-				<table id="datatables_bio" class="table table-bordered table-condensed table-hover" width="100%">
-					<thead>
-						<tr>
-							<th class="text-center">Action</th>
-							<th class="text-center">No</th>
-							<th class="text-center">Nama</th>
-							<th class="text-center">Tempat Tanggal Lahir</th>
-							<th class="text-center">Email</th>
-							<th class="text-center">No. Telp</th>
-							<th class="text-center">Agama</th>
-							<th class="text-center">Kebangsaan</th>
-							<th class="text-center">Pendidikan</th>
-							<th class="text-center">Jenis Kelamin</th>
-							<th class="text-center">Status</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
+				<div class="table-responsive">
+					<table id="datatables_bio" class="table table-bordered table-condensed table-hover" width="100%">
+						<thead>
+							<tr>
+								<th class="text-center">Action</th>
+								<th class="text-center">No</th>
+								<th class="text-center">Nama</th>
+								<th class="text-center">Tempat Tanggal Lahir</th>
+								<th class="text-center">Email</th>
+								<th class="text-center">No. Telp</th>
+								<th class="text-center">Agama</th>
+								<th class="text-center">Kebangsaan</th>
+								<th class="text-center">Pendidikan</th>
+								<th class="text-center">Jenis Kelamin</th>
+								<th class="text-center">Status</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
 			</div>
 			<!-- /.box-body -->
 			<div class="box-footer">

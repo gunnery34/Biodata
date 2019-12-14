@@ -209,12 +209,10 @@
 <script src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>bower_components/jquery/dist/jquery.min.js">
 </script>
 <!-- Bootstrap 3.3.7 -->
-<script
-	src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>bower_components/bootstrap/dist/js/bootstrap.min.js">
+<script src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>bower_components/bootstrap/dist/js/bootstrap.min.js">
 </script>
 <!-- SlimScroll -->
-<script
-	src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js">
+<script src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js">
 </script>
 <!-- FastClick -->
 <script src="<?php echo base_url('assets/theme/AdminLTE-v.2.4/'); ?>bower_components/fastclick/lib/fastclick.js">
@@ -228,12 +226,11 @@
 <!-- js outline -->
 
 <script>
-$(document).ready(function() {
-	$('.sidebar-menu').tree();
+	$(document).ready(function() {
+		$('.sidebar-menu').tree();
 
-	<
-	? php echo $js_inline; ? > // js inline
-})
+		<?php echo $js_inline; ?> // js inline
+	})
 </script>
 
 </body>

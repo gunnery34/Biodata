@@ -1,10 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
 	public $data = []; // set public data
 
-	function __construct() {
+	function __construct()
+	{
+		parent::__construct();
 		$this->data['menu_parent'] = '';
 		$this->data['menu_child'] = '';
 
@@ -14,8 +17,6 @@ class Dashboard extends CI_Controller {
 		$this->data['js_outline'] = '';
 		$this->data['js_inline'] = '';
 
-		parent::__construct();
-
 		if (Accesscontrol_Helper::Is_Loggin_In() == false) {
 			$this->session->set_flashdata('error', 'anda harus login');
 			redirect(base_url() . 'main/sign_in'); // redirect to page sign in
@@ -24,7 +25,8 @@ class Dashboard extends CI_Controller {
 		}
 	}
 
-	public function index() {
+	public function index()
+	{
 		// set title
 		$this->data['title'] = 'Blank Page Index1';
 
@@ -38,7 +40,8 @@ class Dashboard extends CI_Controller {
 		$this->load->view('layout/footer', $this->data);
 	}
 
-	public function index2() {
+	public function index2()
+	{
 		// set title
 		$this->data['title'] = 'Blank Page Index2';
 
