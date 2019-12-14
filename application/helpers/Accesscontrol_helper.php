@@ -1,10 +1,12 @@
 <?php
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Accesscontrol_Helper {
+class Accesscontrol_Helper
+{
 	// Page / Controller
-	public static function Visitor_Counter($VC_Page){
-		$CI =& get_instance();
+	public static function Visitor_Counter($VC_Page)
+	{
+		$CI = &get_instance();
 
 		$param['VC_Page'] 			= $VC_Page;
 		$param['VC_Version'] 		= $CI->agent->version();
@@ -20,7 +22,8 @@ class Accesscontrol_Helper {
 	}
 
 	// UniqeId
-	public static function UniqIdReal($length = 13) {
+	public static function UniqIdReal($length = 13)
+	{
 		// uniqid gives 13 chars, but you could adjust it to your needs.
 		if (function_exists("random_bytes")) {
 			$bytes = random_bytes(ceil($length / 2));
@@ -33,8 +36,9 @@ class Accesscontrol_Helper {
 	}
 
 	// set Loggin
-	public static function Is_Loggin_In() {
-		$CI =& get_instance();
+	public static function Is_Loggin_In()
+	{
+		$CI = &get_instance();
 
 		if (!empty($CI->session->userdata['UsrName']) && $CI->session->userdata['is_logged_in'] == TRUE) {
 			return true;
@@ -45,8 +49,9 @@ class Accesscontrol_Helper {
 
 	// set activity login
 	// IdUnique, CodeName, UsrName, UsrId, Name, Data
-	public static function LoginActivity_Log($ActivityLogIdUnique, $ActivityLogCodeName, $ActivityLogUsrName, $ActivityLogUsrId, $ActivityLogName, $ActivityLogData, $ActivityLogStatus){
-		$CI =& get_instance();
+	public static function LoginActivity_Log($ActivityLogIdUnique, $ActivityLogCodeName, $ActivityLogUsrName, $ActivityLogUsrId, $ActivityLogName, $ActivityLogData, $ActivityLogStatus)
+	{
+		$CI = &get_instance();
 
 		if ($ActivityLogCodeName == 'Sign In') {
 			$ActivityLogCode = 1;
@@ -70,5 +75,15 @@ class Accesscontrol_Helper {
 
 		// save to db
 		$CI->M_Activity->Save_LoginActivityLog($param);
+	}
+
+	public static function base64url_encode($data)
+	{
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+	}
+
+	public static function base64url_decode($data)
+	{
+		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
 	}
 }
