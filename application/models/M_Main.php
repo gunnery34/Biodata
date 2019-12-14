@@ -56,4 +56,35 @@ class M_Main extends CI_Model
 			]
 		)->row();
 	}
+
+	public function get_by_verification_key($string)
+	{
+		return $this->db->get_where(
+			'tbl_usr', // table
+			[
+				'UsrVerificationKey' => $string // column
+			]
+		)->row();
+	}
+
+	public function update_verification_email($array)
+	{
+		$str = [
+			'UsrEmailVerified' => 'Verified',
+			'UsrDateEmailVerified' => date('Y-m-d H:i:s'),
+		];
+
+		$whr_id = [
+			'UsrVerificationKey' => $array['UsrVerificationKey'],
+			'UsrEmail' => $array['UsrEmail'],
+		];
+
+		$this->db->update(
+			$this->_tbl_usr,
+			$str,
+			$whr_id
+		);
+
+		return $this->db->affected_rows();
+	}
 }

@@ -297,4 +297,35 @@ class Main extends CI_Controller
 			redirect(base_url('main/sign_in'));
 		}
 	}
+
+	public function verify_email($verification_key = null)
+	{
+		if (!isset($verification_key)) redirect('main/sign_in'); // if verficationKey null, go to main page
+
+		$verif_key = $this->M_Main->get_by_verification_key(($verification_key)); // get data by verificationKey
+		if (!isset($verif_key)) redirect('main/sign_in'); // if data verificationKey not found
+
+		$array = [
+			'UsrEmailVerified' => 'Verified',
+			'UsrDateEmailVerified' => date('Y-m-d H:i:s'),
+			'UsrEmail' => $verif_key->UsrEmail,
+			'UsrVerificationKey' => $verif_key->UsrVerificationKey,
+		];
+
+		$verif_key_update = $this->M_Main->update_verification_email($array);
+		// $verif_key_update = $this->M_Main->update_verification_email($verif_key);
+
+		if ($verif_key_update > 0) {
+			$this->session->set_flashdata('success', 'Verification Data Completed!');
+			redirect(base_url('main/sign_in'));
+		} else {
+			$this->session->set_flashdata('error', 'Verification Data Failed!');
+			redirect(base_url('main/sign_in'));
+		}
+
+		// info to get data variabel
+		// echo '<pre>';
+		// echo print_r($verif_key);
+		// echo '</pre>';
+	}
 }
