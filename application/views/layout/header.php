@@ -152,7 +152,7 @@
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
-										<a href="#" class="btn btn-default btn-flat">Profile</a>
+										<a href="<?php echo base_url('main/change_password') ?>" class="btn btn-default btn-flat">Change Password</a>
 									</div>
 									<div class="pull-right">
 										<a href="<?php echo base_url('main/sign_out') ?>"

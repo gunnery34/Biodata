@@ -59,7 +59,7 @@
 	</div>
 	<!-- /.login-logo -->
 	<div class="login-box-body">
-		<p class="login-box-msg">Sign in to start your session</p>
+		<p class="login-box-msg">Enter your email to get Recovery Link</p>
 
 		<?php if ($this->session->flashdata('success')) { ?>
 			<div class="alert alert-success alert-dismissible">
@@ -89,10 +89,10 @@
 
 			<?php
 				$attr_form = [
-					'id' => 'form-sign-in',
-					'name' => 'form-sign-in',
+					'id' => 'form-forgot-password',
+					'name' => 'form-forgot-password',
 				];
-				echo form_open('main/sign_in_process', $attr_form);
+				echo form_open('main/forgot_password_process', $attr_form);
 			?>
 			<div class="form-group has-feedback">
 				<input type="email" class="form-control" id="UsrEmail" name="UsrEmail" placeholder="Email" autofocus=""
@@ -101,43 +101,15 @@
 				>
 				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 			</div>
-			<div class="form-group has-feedback">
-				<input type="password" class="form-control" id="UsrPassword" name="UsrPassword" placeholder="Password"
-					data-bv-notempty="true"
-					data-bv-notempty-message="The Password is required and cannot be empty"
-					data-bv-stringlength="true"
-					data-bv-stringlength-min="8"
-					data-bv-stringlength-max="30"
-					data-bv-stringlength-message="The Password must be more than 8 and less than 30 characters long"
-				>
-				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-			</div>
 			<div class="row">
-				<div class="col-xs-8">
-					<div class="checkbox icheck">
-						<label for="HideShowPassword" style="font-size: 13px;">
-							<input type="checkbox" id="HideShowPassword" /> <span class="content-hide-and-show-password">&nbsp; <i class="fa fa-eye"></i> Show Password </span>
-						</label>
-					</div>
-				</div>
-				<!-- /.col -->
-				<div class="col-xs-4">
-					<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+				<div class="col-xs-12 text-right">
+					<button type="submit" class="btn btn-primary btn-flat">Get Recovery</button>
 				</div>
 				<!-- /.col -->
 			</div>
 		</form>
 
-		<div class="social-auth-links text-center">
-			<p>- OR -</p>
-			<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-				Facebook</a>
-			<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-				Google+</a>
-		</div>
-		<!-- /.social-auth-links -->
-
-		<a href="<?php echo base_url('auth/forgot_password') ?>">I forgot my password</a><br>
+		<a href="<?php echo base_url('main/sign_in') ?>" class="text-center">I already have a membership</a><br/>
 		<a href="<?php echo base_url('auth/sign_up') ?>" class="text-center">Register a new membership</a>
 
 	</div>
@@ -163,32 +135,13 @@
 	}, 10000);
 
 	$(function () {
-		$('#form-sign-in').bootstrapValidator();
+		$('#form-forgot-password').bootstrapValidator();
 
 		// Close Alert Slide Up Close Animation
 		$('body').on('close.bs.alert', function(e){
 			e.preventDefault();
 			e.stopPropagation();
 			$(e.target).slideUp();
-		});
-
-		// iCheck for checkbox
-		$('input[type=checkbox]').iCheck({
-			checkboxClass: 'icheckbox_square-blue',
-			radioClass: 'iradio_square-blue',
-			increaseArea: '20%' /* optional */
-		});
-		$('input[type=checkbox]').on('ifClicked', function (ev) { $(ev.target).click() });
-
-		// Hide / Show Password
-		$('#HideShowPassword').click(function(){
-			if($(this).is(':checked')){
-				$('#UsrPassword').attr('type','text');
-				$('.content-hide-and-show-password').html('<i class="fa fa-eye-slash"></i> Hide Password');
-			}else{
-				$('#UsrPassword').attr('type','password');
-				$('.content-hide-and-show-password').html('<i class="fa fa-eye"></i> Show Password');
-			}
 		});
 	});
 </script>

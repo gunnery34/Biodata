@@ -36,6 +36,7 @@
         					</span>
         				</a>
         			</li>
+
         			<li
         				class="treeview <?php echo (!empty($menu_parent) && ($menu_parent == 'Biodata') ? ' active' : ''); ?>">
         				<a href="#">
@@ -52,6 +53,14 @@
         						</a>
         					</li>
         				</ul>
+        			</li>
+
+        			<li
+        				<?php echo (!empty($menu_parent) && ($menu_parent == 'Main') ? (!empty($menu_child) && ($menu_child == 'Change Password') ? ' class="active"' : '') : ''); ?>>
+        				<a href="<?php echo base_url('main/change_password'); ?>">
+        					<i class="fa fa-user"></i> <span>User Pages</span>
+        					</span>
+        				</a>
         			</li>
         		</ul>
         	</section>
